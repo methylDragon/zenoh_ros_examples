@@ -35,7 +35,13 @@ int main(int argc, char * argv[])
   }
   auto request = std::make_shared<AddTwoInts::Request>();
   request->a = 41;
-  request->b = 1;
+
+  if (argc > 1){
+    request->b = atoi(argv[1]);
+  } else {
+    request->b = 1;
+  }
+
   auto result_future = client->async_send_request(request);
   if (rclcpp::spin_until_future_complete(node, result_future) !=
     rclcpp::FutureReturnCode::SUCCESS)
