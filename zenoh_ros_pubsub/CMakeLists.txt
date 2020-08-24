@@ -17,11 +17,11 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
-add_executable(pubsub_member_function member_function.cpp)
-ament_target_dependencies(pubsub_member_function rclcpp std_msgs)
+add_executable(pubsub pubsub.cpp)
+ament_target_dependencies(pubsub rclcpp std_msgs)
 
 install(TARGETS
-  pubsub_member_function
+  pubsub
   DESTINATION lib/${PROJECT_NAME}
 )
 
