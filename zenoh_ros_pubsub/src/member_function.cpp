@@ -31,23 +31,22 @@ public:
   {
     std::cout << "STARTING NODE" << std::endl;
 
-    publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
-
+    publisher_ = this->create_publisher<std_msgs::msg::String>("/topic", 10);
     std::cout << "PUBLISHER CREATED" << std::endl;
 
-    rclcpp::sleep_for(std::chrono::seconds(1));
-
     subscription_ = this->create_subscription<std_msgs::msg::String>(
-      "topic", 10, std::bind(&MinimalPublisher::topic_callback, this, _1));
+      "/topic", 10, std::bind(&MinimalPublisher::topic_callback, this, _1));
+
+    rclcpp::sleep_for(std::chrono::seconds(1));
 
     while (count_ < 3)
     {
       auto message = std_msgs::msg::String();
-      message.data = "Hello, world!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! " + std::to_string(count_++);
+      message.data = "Hello, world!!! " + std::to_string(count_++);
       RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());
       publisher_->publish(message);
 
-      rclcpp::sleep_for(std::chrono::seconds(1));
+      rclcpp::sleep_for(std::chrono::seconds(3));
     }
 
     // timer_ = this->create_wall_timer(
